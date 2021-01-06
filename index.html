@@ -114,23 +114,17 @@
 
          // The function that creates the viable countdown
          function timeChange() {
-             time = time - 1;
-             timer.innerHTML = time;
-             timerTimeoutID = setTimeout(timeChange, timeSpeed);
-
-             // This is to stop the game once the countdown is over
-             if (time === 0) {
-                 gameStop();
+             if (time > 0) {
+               time = time - 1;
+               timer.innerHTML = time;
+               timerTimeoutID = setTimeout(timeChange, timeSpeed);
              }
-         }
-
-         // The function for stoping the timer once it has hit 0
-         function gameStop() {
-             quaffle.style.visibility = "hidden";
-             quaffle.style.position = "absolute";
-             clearInterval(timeSpeed);
-             //time = 0;
-             //timer.innerHTML = time;
+             else {
+               quaffle.style.visibility = "hidden";
+               quaffle.style.position = "absolute";
+               time = 0;
+               timer.innerHTML = time;
+             }
          }
     </script>
   </body>
