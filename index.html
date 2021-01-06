@@ -45,7 +45,7 @@
     </ol>
     <h3>Score: <span id="scoreboard">No Score Yet</span></h3>
 
-    <h3>Time: <span id="timer"> 15 </span>seconds</h3>
+    <h3>Time: <span id="timer"> 15 </span> seconds</h3>
     <button onclick="startGame()">New Game</button>
 
     <div id="gameboard">
@@ -65,11 +65,19 @@
         var time = 15;
         var timer = document.getElementById("timer");
 
+        // Variables used to change the timer
+        var timeSpeed = 1000; // speed in milliseconds
+        var timerTimeoutID = null;
+
         // Function that starts a new game of Quidditch!
         function startGame() {
         // Set the score to zero
         score = 0;
         scoreboard.innerHTML = score;
+
+        // Set the timer to 15 seconds
+        time = 15;
+        timer.innerHTML = time;
 
          // Make our quaffle objects visibile. Note that we initially set them to be invisible in our CSS above.
         quaffle.style.visibility = "visible";
@@ -77,9 +85,8 @@
         //Have the quaffle start to move
         moveQuaffle();
 
-        // Reset the timer to 15 seconds
-        time = 15;
-        timer.innerHTML = time;
+        // Set the timer to start
+        timeChange();
          }
 
          function moveQuaffle() {
@@ -105,9 +112,25 @@
             moveQuaffle();
          }
 
-         function timeChange(time) {
+         // The function that creates the viable countdown
+         function timeChange() {
              time = time - 1;
              timer.innerHTML = time;
+             timerTimeoutID = setTimeout(timeChange, timeSpeed);
+
+             // This is to stop the game once the countdown is over
+             if (time === 0) {
+                 gameStop();
+             }
+         }
+
+         // The function for stoping the timer once it has hit 0
+         function gameStop() {
+             quaffle.style.visibility = "hidden";
+             quaffle.style.position = "absolute";
+             clearInterval(timeSpeed);
+             //time = 0;
+             //timer.innerHTML = time;
          }
     </script>
   </body>
